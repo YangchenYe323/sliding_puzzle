@@ -7,17 +7,21 @@
  */
 function Grid(size, previousState, dir){
     this.size = size;
-    this.cells = previousState? this.fromPreviousState(previousState) : this.defaultState(dir);   
+    this.tileBoard = previousState? this.fromPreviousState(previousState) : this.defaultState(dir);   
 }
 
-Grid.prototype.defaultState(dir){
-    var cells = [];
+Grid.prototype.defaultState = function(dir){
+    var tileBoard = [];
     for (var x = 0; x < this.size; ++x){
-        cells[x] = [];
+        tileBoard[x] = [];
         for (var y = 0; y < this.size; ++y){
             var tile = new Tile({'x': x, 'y': y}, dir);
-            cells[x].push(tile);
+            tileBoard[x].push(tile);
         }
     }
-    return cells;
+    return tileBoard;
+}
+
+Grid.prototype.fromPreviousState = function(previousState){
+
 }

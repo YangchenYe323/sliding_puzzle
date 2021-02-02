@@ -29,7 +29,7 @@ Actuator.prototype.actuate = function(grid){
  * element where the wrapper is used to anchor its position on the board and the img's src
  * is determined by the tile's src
  */
-Actuator.prototype.addTile(tile){
+Actuator.prototype.addTile = function(tile){
     var self = this;
 
     var wrapper = document.createElement('div');
@@ -53,15 +53,19 @@ Actuator.prototype.addTile(tile){
     }
 
     wrapper.appendChild(inner);
-    tileContainer.appendChild(wrapper);
+    this.tileContainer.appendChild(wrapper);
 }
 
 /**
  * Return an array of classes for tiles at the given position
  */
 Actuator.prototype.positionClass = function(pos){
-    position = this.normalizePosition(position);
+    position = this.normalizePosition(pos);
     return "tile-position-" + position.x + "-" + position.y;
+}
+
+Actuator.prototype.normalizePosition = function(pos){
+    return {x: pos.x+1, y: pos.y+1}
 }
 
 /**
