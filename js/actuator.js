@@ -33,7 +33,7 @@ Actuator.prototype.addTile = function(tile){
     var self = this;
 
     var wrapper = document.createElement('div');
-    var inner = document.createElement('img');
+    var inner = tile.imgSrc? document.createElement('img'): document.createElement('div');
     //this is the first position we will render the tile to be in
     //if a tile is moved from another position, then we will first render
     //it to the previous position and then update its position in an animation
@@ -41,6 +41,7 @@ Actuator.prototype.addTile = function(tile){
     var positionClasses = this.positionClass(firstPos);
     classes = ['tile', positionClasses];
     this.applyClass(wrapper, classes);
+    inner.classList.add(".tile-inner");
     inner.setAttribute('src', tile.imgSrc);
 
     //in the case where we need to render the tile at its previous position first and 

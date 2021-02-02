@@ -7,7 +7,7 @@ function KeyboardInputManager(){
 
 //selector: the selector of the button element(className, id, etc)
 //callback: the function to bind to the click of that button
-KeyboardInputManager.prototype.bindButtonPress = function(selector, callback){
+KeyboardInputManager.prototype.bindClickCallback = function(selector, callback){
     let button = document.querySelector(selector);
     //we want to call the callback function from the KeyboardInputManager object
     //so that we can manage event mapping and other internal state
