@@ -22,8 +22,6 @@ Grid.prototype.defaultState = function(dir){
 
     tileBoard[this.size-1][this.size-1].imgSrc = null;
 
-    tileBoard.nullPosition = {x: this.size-1, y: this.size-1};
-
     return tileBoard;
 }
 

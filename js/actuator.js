@@ -13,6 +13,9 @@ function Actuator(){
  */
 Actuator.prototype.actuate = function(grid){
     var self = this;
+    
+    self.clearContainer(self.tileContainer);
+
     grid.tileBoard.forEach(column =>{
         column.forEach(tile=>{
             self.addTile(tile);
@@ -37,18 +40,19 @@ Actuator.prototype.addTile = function(tile){
     //this is the first position we will render the tile to be in
     //if a tile is moved from another position, then we will first render
     //it to the previous position and then update its position in an animation
-    var firstPos = tile.previousPosition? tile.previousPosition: {x: tile.x, y: tile.y};
+    var firstPos = tile.toMove && tile.previousPosition? tile.previousPosition: {x: tile.x, y: tile.y};
+    console.log(firstPos);
     var positionClasses = this.positionClass(firstPos);
-    classes = ['tile', positionClasses];
+    var classes = ['tile', positionClasses];
     this.applyClass(wrapper, classes);
     inner.classList.add(".tile-inner");
     inner.setAttribute('src', tile.imgSrc);
 
     //in the case where we need to render the tile at its previous position first and 
     //then move it to its current position, we will set up a Task that updates its position
-    if(tile.previousPosition){
+    if(tile.toMove && tile.previousPosition){
         window.requestAnimationFrame(function(){
-            classes[2] = self.positionClass({x: tile.x, y: tile.y});
+            classes[1] = self.positionClass({x: tile.x, y: tile.y});
             self.applyClass(wrapper, classes);
         });
     }
@@ -75,3 +79,9 @@ Actuator.prototype.normalizePosition = function(pos){
 Actuator.prototype.applyClass = function(element, classes){
     element.setAttribute("class", classes.join(" "));
 }
+
+Actuator.prototype.clearContainer = function (container) {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  };

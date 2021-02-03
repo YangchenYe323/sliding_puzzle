@@ -34,9 +34,64 @@ GameManager.prototype.setUp = function(){
     this.actuate();
 }
 
+/**
+ * This function handles move operation. 
+ * @param {} direction 0:up, 1:right, 2:down 3:left
+ */
 GameManager.prototype.move = function(direction){
-    //0:up, 1:right, 2:down 3:left
-    
+    console.log(direction);
+    console.log(this);
+
+    this.grid.tileBoard.forEach(column => {
+        column.forEach(tile => {
+            tile.toMove = false;
+        });
+    });
+
+    var vector = this.getVector(direction);
+    for (var x = 0; x < this.size; ++x){
+        for (var y = 0; y < this.size; ++y){
+            var tile = this.grid.tileBoard[x][y];
+            var newX = x + vector.x;
+            var newY = y + vector.y;
+            if (newX >= 0 && newX < this.size && newY >= 0 && newY < this.size){
+                var neighbor = this.grid.tileBoard[newX][newY];
+                if (neighbor.imgSrc == null){
+                    tile.toMove = true;
+                    this.swapPosition(tile, neighbor);
+                    this.actuate();
+                    return;
+                }
+            }
+        }
+    }
+}
+
+GameManager.prototype.swapPosition = function(tile, neighbor){
+    tile.savePosition();
+    neighbor.savePosition();
+    var tileNewPos = {x: neighbor.x, y:neighbor.y};
+    neighbor.updatePosition({x: tile.x, y: tile.y});
+    tile.updatePosition(tileNewPos);
+
+    console.log(tile);
+    console.log(neighbor);
+
+    this.grid.tileBoard[tile.x][tile.y] = tile;
+    this.grid.tileBoard[neighbor.x][neighbor.y] = neighbor;
+
+}
+
+GameManager.prototype.getVector = function(direction){
+    var map = {
+        0: {x: 0, y: -1},
+        1: {x: 1, y: 0},
+        2: {x: 0, y: 1},
+        3: {x: -1, y:0}
+    };
+
+    return map[direction];
+
 }
 
 

@@ -7,6 +7,7 @@
  * @param {*} src 
  */
 function Tile(position, dir){
+    this.toMove = false;
    this.x = position.x;
    this.y = position.y;
    this.imgSrc = dir + '/' + this.x.toString() + this.y.toString() + ".png";
